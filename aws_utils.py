@@ -88,3 +88,46 @@ def convert_csv_to_lst(df, train_or_test, lstname):
 
 #convert_csv_to_lst(df_train_unformatted, 'train', 'train.lst')
 #convert_csv_to_lst(df_test_unformatted, 'test', 'test.lst')
+
+
+
+# convert current df format into AWS acceptible one...
+
+# test that image is connected to df
+
+from PIL import Image
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+example = df.iloc[0]
+
+file_name = example['filename']
+file_path = root + '/' + 'train' + '/' + file_name
+print(file_name)
+print(file_path)
+
+img = Image.open(file_path)
+
+fig, ax = plt.subplots()
+
+ax.imshow(img)
+
+
+image_width, image_height = img.size
+
+
+xmin = example['xmin']
+xmax = example['xmax']
+ymin = example['ymin']
+ymax = example['ymax']
+
+width = xmax - xmin
+height = ymax - ymin
+
+rect = patches.Rectangle((xmin,ymin), width, height, linewidth = 1, edgecolor = 'r', facecolor = 'none')
+
+
+ax.add_patch(rect)
+
+#plt.imshow(img)
+plt.show()
